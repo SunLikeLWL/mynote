@@ -375,6 +375,9 @@ React把用户界面抽象成一个个组件
      }
   }
 
+  高阶组件符合函数编程的思想。对于原组件来说，并不会感知到高阶组件的存在，
+  只需把功能嵌套在呀的之上就可以了，从而避免了使用mixin时产生的副作用
+
 
 
 
@@ -399,32 +402,166 @@ React把用户界面抽象成一个个组件
 
 
 
+## 2.6 组件化性能优化
+
+
+影响网页性能最大的因素就是浏览器的重绘和重排版
+
+React背后的虚拟DOM就是尽可能的较少浏览器的重绘和重排版
+
+纯函数：
+
+1、给定相同的输入，他总是返回相同的输出
+
+2、过程没有副作用（side effect）
+
+3、没有额外的状态依赖
+
+ 
+ ### PureRender
+ PureRender中的Pure指的是组件满足纯函数的条件，即组件的渲染是被相同的props和state渲染
+ 进而得到相同的结果
+
+
+只能通过深比较
+
+shouldComponentUpdate(nextProps,nextState){
+  //太昂贵了
+  return isDeepEqual(this.props,this.state)&&isDeepEqual(this.state,nextState);
+}
+
+
+
+### 优化PureRender
 
 
 
 
 
+  1、直接为props设置为对象或数组
+
+  每次调用组件其实都会重新创建组件。
+  就算传入的数组和对象的值没有改变，他们引用的地址也会发生改变
+
+2、设置props方法并通过事件绑定在元素上
+
+
+  把事件绑定在构造器内
+  this.handleChange = this.handleChange.bind(this)
 
 
 
 
 
+3、设置子组件
+
+对月设置了子组件的React组件，在调用shouldComponentUpdate时，均为true
+
+import {PureRenderMixin} from 'react-addons-pure-render-mixin';
+
+constructor(){
+   this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);  
+}
+
+
+
+## Immutable
+
+Javascript中的对象一般是可变的（mutable），因为使用了引用赋值，
+新的对象简单的引用了原对象，改变新的对象将影响到原始对象
+
+
+### Immutable Data
+
+Immutable Data就是一旦创建，就不能再更改的数据。
+
+### Immutable的优点
+
+1、降低了“可变”带来的复杂度
+
+2、节省内存
+Immutable使用结构共享尽量复用内容。
+没有被引用的对象会被垃圾回收
+
+3、撤销、重做，赋值、粘贴甚至事件旅行这些功能做起来都是小菜一碟
+
+4、并发安全
+
+5、拥抱函数式编程
+
+
+### 使用Immutable的缺点
+
+容易与原生对象混淆是使用immutable的过程中遇到的最大问题
 
 
 
 
 
+## 2.7 动画
+
+
+### CSS动画的限制
+
+1、CSS只支持cubic-bezier的缓动，如果你的动画对缓动函数有要求，就必须使用Javascript动画
+
+2、CSS动画只能针对一些特有的CSS属性。
+
+3、CSS把translate、rotate、skew等都归结为一个属性----transform。
+
+
+
+### js动画
+
+
+### SVG动画
+
+
+### React Transition生命周期
+
+componentWillAppear
+
+componentDidAppear
+
+componentWillEnter
+
+componentDidEnter
+
+componentWillLeave
+
+componentDidLeave
+
+
+
+## 2.8自动化测试
+
+1、自动找到测试
+
+2、自动mock模拟依赖包，达到单元测试的目的
+
+3、并不需要真实DOM环境运行，而是JSDOM模拟的DOM
+
+4、多进程执行测试
+
+5、Simulate.{EventName}(DOMElement element,[object eventData])：模拟触发事件
+
+6、 renderIntoDocument(ReactElement instance):渲染React组件文档中，
+这里的文档节点由JSDOM提供
+
+7、findRenderedDOMComponentWithClass(ReactComponent tree,string className):
+从渲染的DOM书中查找含有class的节点
+
+8、findRenderedDOMComponentWithTag(ReactComponent tree,function componentClass)
+
+## 组件化实例
 
 
 
 
 
+# 第三章 解读源码
 
-
-
-
-
-
+## 3.1 初探React源码
 
 
 
