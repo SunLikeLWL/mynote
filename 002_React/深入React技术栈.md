@@ -564,11 +564,229 @@ componentDidLeave
 ## 3.1 初探React源码
 
 
+addons：
+包含一系列的工具方法插件，如PureRenderMixin、CSSTransitionGroup、Fragment、linkedStateMixin
+
+
+isomorphic:
+包含一系列同构方法
+
+shared:
+包含一些公用或常用方法，如Transition、CallBackQueue
+
+
+test:
+包含一些测试方法
+
+core/tests
+包含一些边界错误的测试用例
+
+renders:
+是React代码的核心部分，他包含了大部分功能实现
+
+
+dom：
+包含client、server、shared
+   client:
+   包含DOM操作方法（findDOMNode、setInnerHTML、setTextContext）
+   server:
+   主要包含服务器端渲染的实现和方法
+   shared：
+   包含文本组件（ReactDOMTextComponent）、标签组件（ReactDOMComponent）、DOM属性操作
+   (DOMProperty/DOMPropertyOperations)、css属性操作（CSSProperty、cssPropertyOperations）
+
+
+shared：
+   包含event和reconciler
+   event：包含一些更为底层的事件方法
+   reconciler：称为协调器，他是最为核心的部分，包含React中自定义组件的实现（ReactCompositeComponent）、
+   组件生命周期机制、setState机制（ReactUpdates、ReactUpdateQueue）、DOM diff算法
 
 
 
 
 
 
+
+## 3.2 Virtual DOM 模型
+
+标签元素
+
+ 标签名
+ 几点属性，包含样式、属性、事件等
+ 子节点
+ 标识id
+
+
+
+## 自定义组件
+
+ReactCompositeComponent
+
+
+
+## 3.3 生命周期的管理艺术
+
+1、首次挂载组件
+
+getDefaultProps
+
+getInitialState
+
+componentWillMount
+
+render
+
+componentDidMount
+
+
+
+
+2、组件卸载时
+
+componentWillUnmount
+
+
+3、组件重新渲染时
+
+componentWillReceiveProps
+
+shouldComponentUpdate
+
+ComponentWillUpdate
+
+render
+
+ComponentDidUpdate
+
+
+## 解密setState
+
+React是通过状态管理来实线对组件的管理
+
+
+setState通过一个队列机制实现state更新
+
+### setState循环调用风险
+
+ 当调用setState时，实际上会执行enqueueSetState方法，
+ 并对partialState以及_pendingStateQueue更新队列并进行合并操作，
+ 最后通过enqueueUpdate执行state更新
+
+  如果在shouldComponentUpdate或者componentWillUpdate方法调用setState
+  会造成死循环
+
+  ## diff算法
+
+  diff策略
+
+  1、web ui 中DOM节点层次的移动操作特别少，可以忽略不计
+
+  2、拥有相同类的两个组件会生成相似的树状结构，
+  拥有拥有不同类的两个组件会生成不同的树状结构
+
+  3、对于同一级的一组子节点，他们可以通过唯一的id进行区分
+
+
+  ## React Patch方法
+
+
+
+  # 初识Flux架构模式
+
+  用于构建用户界面的应用程序架构
+
+  ## React独立架构
+
+  ## MV*和Flux
+
+  ### MVC
+  是一种架构设计模式，他通过关注数据界面分离，来鼓励改进用户程序结构
+
+  Model
+
+  View
+
+  Controller
+
+## MVVM演变
+
+
+
+## Flux基本概念
+
+dispatcher
+
+action
+普通的js对象，一般包含type、payload等字段，用于描述一个事件及需要改变的相关数据
+
+store
+ 保存数据，并定义修改逻辑，
+ 同时调用dispatcher的register方法将自己注册为一个监听器
+
+
+view
+
+
+
+## Flux应用实例
+
+
+### 设计store
+
+
+
+## 解读Flux
+
+
+
+# 深入Redux应用架构
+
+
+## Redux三大原则
+
+1、单一数据
+
+
+2、状态是只读的
+
+
+3、状态修改均由纯函数完成
+
+
+
+createStore方法创建的store是一个对象
+
+getState：获取store当前的状态
+
+dispatch(action)： 分发一个action，并返回这个action，这是唯一改变数据的方式
+
+subscribe(listener): 注册一个监听者，他在store发生变化时被调用
+
+
+replaceReduce(nextReducer)： 更新当前store里的reducer，一般只会在开发模式中调用该方法
+
+
+
+### 与React绑定
+
+Redux的核心只有一个createStore()方法，仅仅使用这个方法还不足以让redux在我们的React
+应用中发挥作用。我们还需要react-redux--Redux官方提供的React绑定。
+
+React-redux提供了一个组件和一个API帮助Redux和React进行绑定，一个是React组件<Provider/>,
+一个是connect()。
+
+Redux是一个可预测容器(predictable state container)
+
+
+
+## Redux middleware
+
+
+button  -(callback)->  dispatch  -(action)-> reducer -(state)-> view
+
+
+
+# Redux高级应用
 
 
