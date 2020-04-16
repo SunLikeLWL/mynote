@@ -17,3 +17,35 @@
  每当使用setState()时，React会将需要更新的state合并后放入状态队列，
  触发调和过程，而不是立即更新state，然后根据新的状态结构重新渲染UI界面，
  最后React会根据差异对界面进行最小化重新渲染。
+
+
+
+ React Router 是建立在history之上的
+
+
+ 监听浏览器地址变化
+
+ 1、 browserHistory
+
+ 需要服务器做配置
+
+
+ 2、hashHistory
+ 不需要服务器做配置
+
+
+ 3、 createMemoryHistory
+
+不会在地址栏被操作或读取
+
+
+
+
+## 动态路由
+
+
+React Router里面的路径配置以及组件都是异步完成的，不仅允许你延迟加载组件，
+并且可以延迟加载路由配置。
+
+
+
