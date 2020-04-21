@@ -3,6 +3,8 @@
 笔记
 
 
+
+
 ## JSX
 
 
@@ -32,6 +34,7 @@ this.setState({
 // counter:2
 // 只会执行一次
 
+//可以通过回调函数的形式来避免合并
 this.setState((prevState)=>{
     counter: prevState.counter+1
 })
@@ -118,6 +121,7 @@ const comment = React.memo(function(){
 
 ## 高阶组件装饰器写法
 
+使用插件
 babel-plugin-transform-decorators-legacy
 
 
@@ -128,7 +132,7 @@ babel-plugin-transform-decorators-legacy
 而且是以一种明确和安全的方式进行。
 如果组件间有公用的非UI逻辑，将他们抽取JS模块导入使用而不是继承他。
 
-
+ 
 // Dialog作为容器不关心内容和逻辑
 
 function Dialog(props){
@@ -156,7 +160,6 @@ Context提供了一个无需为每层组件手动添加props，就能在组件�
 
 
 
-
 # Hook API
 
 钩子函数
@@ -170,6 +173,9 @@ Hook的特点：
 2、可将组件中相互关联的部分拆分成更小的函数，复杂组件将变得更容易理解
 
 3、更简洁、更容易理解的代码
+ 
+
+
 
 
 ## useState
@@ -224,7 +230,7 @@ useDemo
 组件跨层级通信
 
 
-上下文提供一种不需要没层设置props就能夸多级组件传递数据的方式
+上下文提供一种不需要每层设置props就能跨多级组件传递数据的方式
 
 ### 相关api
 
@@ -300,4 +306,309 @@ export default function ContextTest() {
         </div>
     )
 }
+
+
+
+## 表单组件设计思路
+
+1、表单组件要求实现数据收集、校验、提交等特性，可通过高阶组件扩展
+
+2、高阶组件给表单组件传递一个input组件包装函数接管其输入事件并统一管理表单数据
+
+3、高阶组件给表单传递一个校验函数使其具备数据校验功能
+
+
+
+
+
+# Redux
+
+
+## 课程目标
+
+1、掌握redux
+2、掌握redux中间件
+3、掌握react-router4
+4、理解redux及其中间件原理
+
+
+只是要点：
+1、思考应用状态管理的模式
+2、redux全局状态管理
+3、react路由管理
+
+
+
+
+### Redux Fluw
+
+Action Creators：
+
+Store：
+
+Reducers：
+
+
+React Component
+
+
+
+### 检查点
+createStore
+
+reducer
+
+getState
+
+dispatch
+
+subscribe
+
+
+## react-redux
+每次重新调用render太low了，感觉和react不是很搭，
+想用更react的方式来写，需要react-redux的支持
+
+npm install react-redux -S
+
+提供了两个API
+
+1、provider顶级组件，提供数据
+2、connect 高阶组件，提供数据方法
+
+
+## Redux with middlewares
+
+Action -> mw -> mw -> mw -> store(Reducer) -> UI
+
+
+1、Reducer：纯函数，只承担计算State的功能，不适合承担其他功能，也承担不了，
+     因为理论上，纯函数不能进行读写操作
+
+2、View：与State一一对应，可以看做State的视觉层，也不适合承担其他功能
+
+3、Action：存放数据的对象，即消息的载体，只能被别人操作，自己不能进行任何操作
+
+4、实际的reducer和action store都需要独立拆分文件
+
+
+ 
+
+
+# react-router4
+
+
+
+
+# redux 原理
+
+
+
+# React-redux原理
+
+
+
+
+# Redux-thunk原理
+
+
+const thunk = ({dispatch,getState}=>next=>action=>{
+    // 当action是函数的时候，执行这个函数
+    if(typeof action =='function'){
+       return action(dispatch,getState); 
+    }
+    return next(action)
+})
+
+export default thunk;
+
+
+
+# 课堂目标
+
+1、掌握umi
+2、掌握redux解决方案 -- dva
+3、掌握generator
+4、掌握redux-saga
+
+
+## redux-saga使用
+
+概述：
+redux-saga使副作用（数据获取、浏览器缓存获取）易于管理、执行、测试和失败处理
+
+
+
+# ES 6的Generator
+
+function * 这种声明方式（function关键字后面跟一个星号）会定义一个生成器函数（generator函数），
+他返回一个Generator对象
+
+// 定义生成器函数
+
+function * g = {
+    yield 'a';
+    yield 'b';
+    yield 'c';
+    yield 'd';
+    return 'ending';
+}
+
+// 返回Generator函数
+
+console.log(g());// g{}
+
+console.log(g());// [object Generator]
+
+// 生成器函数在执行时能暂停，后面又能从暂停处继续执行
+
+
+
+var gen = g();
+
+console.log(gen.next());// {value:"a",done:false}
+console.log(gen.next());// {value:"b",done:false}
+console.log(gen.next());// {value:"c",done:false}
+console.log(gen.next());// {value:"d",done:false}
+console.log(gen.next());// {value:"ending",done:true}
+
+
+
+// 利用递归
+
+function next(){
+    let {value,done} = gen.next();
+    console.log(value);
+    if(!done) next();
+}
+
+next();
+
+
+
+
+function *say(){
+    let a = yield '1';
+    console.log(a);
+    let b = yield '2';
+    console.log(b);
+}
+
+
+let it  = say(); //返回迭代器
+
+// 输出{value:'1',done:false};
+// a的值并非返回值，而是下次next参数
+console.log()
+
+
+
+
+# React原理剖析
+
+# createElement 
+
+### 总结
+
+1、webpack+babel编译时，替换JSX为React.createElement(type,props,...children)
+
+2、所有React.createElement()执行结束后得到一个JS对象，他能够完整描述dom结构，称之为vdom
+
+3、ReactDOM.render(vdom,container)可以将vdom转换为dom并追加到container中，
+通过递归遍历vdom树，根据vtype不同，执行不同逻辑：vtype为1生成原生函数，为2则需要将类组件
+实例化并执行器render将返回vdom初始化，为3则将函数执行并返回vdom初始化
+
+
+
+# setState
+
+class组件的特点，就是拥有特殊状态并且可以通过setState更新状态，从而重新渲染视图，是学习React中最重要的API
+
+setState并没有直接操作去渲染，而是执行了一个异步的update队列
+
+
+
+
+# JSX
+
+## 1、什么是JSX
+
+1、React使用JSX来代替常规的Javascript；
+2、JSX是一个看起来很像XML的Javascript语法扩展。
+
+## 2、为什么需要JSX
+1、JSX执行更快，因为他在编译为Javascript代码后进行了优化；
+2、他是类型安全的，在编译过程中就能发现错误；
+3、使用JSX编写模板更加简单快速
+
+## 3、怎么用
+
+## 4、原理  babel-loader会预编译为React.createElement()
+
+
+
+
+# 虚拟DOM
+
+
+### 虚拟DOM是啥
+
+1、用Javascript对象表示DOM信息和结构，当状态变更的时候，重新渲染这个Javascript的对象结构，
+这个Javascript对象 称为Virtual DOM
+
+### 为何使用虚拟DOM
+
+1、DOM操作很慢，轻微的操作都可能导致页面重排，非常耗性能。相对于DOM对象，JS对象处理起来更快，
+而且更简单。通过diff算法比较新旧vdom之间的差异，可以批量的、最小化的执行dom操作，从而提高性能。
+
+
+### 哪里用到虚拟DOM
+
+react中JSX语法描述视图，通过babel-loader转译后他们变成React.createElement()的形式，该函数将
+生成vdom来描述真实dom。将来如果状态改变，vdom将作出相应的变化，在通过diff算法对比新老vdom区别
+从而作出最终dom操作
+
+
+# diff算法
+
+
+### diff 策略
+
+1、同级比较，web ui中DOM节点跨层级的移动操作特别少，可以忽略不计
+
+
+2、拥有相同类型的两个组件将会生成相似的属性结构，拥有不同类的两个组件将会生成不同的树形结构。
+
+
+
+3、对于同一层的一组子节点，通过唯一的key进行区分
+
+
+
+### element diff
+
+差异类型：
+
+1、替换原来的节点，例如把div换成了p，Comp1换成了Comp2
+
+2、移动、删除、新增子节点，例如ul中的多个子节点li中出现了顺序互换
+
+3、修改节点属性，例如节点类名发生了变化
+
+4、对于文本节点，文本内容可能会改变
+
+
+
+
+### 重排操作：
+
+  1、插入 INSERT_MARKUP
+
+  2、移动 MOVE_EXISTING
+
+  3、删除  REMOVE_NODE
+
+
+
+
 
