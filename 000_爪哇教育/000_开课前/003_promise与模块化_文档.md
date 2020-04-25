@@ -123,8 +123,7 @@ try{
 2、ES6中的Promise构造函数，new Promise(resolve,reject)，执行resolve函数的时候状态将变为fulfilled状态，
       执行第二个函数的时候状态将变为rejected状态
 
-3、通过.then 方法，即可在上一个promise达到已完成时继续执行下一个函数或者promise。同时通过resolve和reject时传入参数，
-      即可给下一个函数或Promise传入初始值
+3、通过.then 方法，即可在上一个promise达到已完成时继续执行下一个函数或者promise。同时通过resolve和reject时传入参数，即可给下一个函数或Promise传入初始值
 
 4、已拒绝的Promise，后继可以通过.catch方法或者是.then方法的第二个参数或是try catch进行捕获
 
@@ -138,7 +137,6 @@ const  ajaxAsync =(url)=>{
       return new Promise((resolve,reject)=>{
           const client =  new XMLHttpRequest();
           client.open('get',ur);
-
           client.onreadystatechange = ()=>{
                 if(this.readyState !== 4){
                     return ;

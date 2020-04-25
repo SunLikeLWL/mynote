@@ -1,7 +1,7 @@
 import React from 'react';
- import ReactDOM, { findDOMNode } from 'react-dom';
-  import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
-   export default class Portal extends React.Component {
+import ReactDOM, { findDOMNode } from 'react-dom';
+import CSSPropertyOperations from 'react/lib/CSSPropertyOperations';
+export default class Portal extends React.Component {
     constructor() {
         // ...  
     }
