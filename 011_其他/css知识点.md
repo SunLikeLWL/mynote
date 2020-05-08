@@ -11,7 +11,7 @@
 
 
 <!-- 多行 -->
-.muti_line{
+.multiple_line{
     display: webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;

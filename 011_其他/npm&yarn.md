@@ -15,6 +15,6 @@ yarn是由facebook、google等联合开发推出的
 npm install   -   yarn 
 npm install vue  - yarn add vue
 npm uninstall vue - yarn remove vue
-npm update - yarn upgrape
+npm update - yarn upgrade
 
 
