@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <button id='book-search-results'>book-search-results</button>
+    <script>
+        var obj = {
+            name: "obj",
+            show: function () {
+                console.log('this:', this);
+                console.log('this.name:', this.name);
+            }
+        };
+        var elem = document.getElementById('book-search-results');
+        elem.addEventListener('click', obj.show);
+        elem.addEventListener('click', obj.show.bind(obj));
+        elem.addEventListener('click', function () {
+            obj.show();
+        });
+
+    </script>
+</body>
+
+</html>
