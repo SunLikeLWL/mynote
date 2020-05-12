@@ -512,7 +512,7 @@ class Promise {
 2、不同模块之间保留相互导入和导出的方式方法，模块之间能够相互通信。
       模块的执行与加载遵循一定的规范，能保证彼此之间的依赖关系
 
-
+ 
 
 ## CommonJS
 
@@ -566,7 +566,27 @@ require(['moduleA','moduleB'],(moduleA,moduleB)=>{
 ## UMD Universal Module Definition 
 
 作为一个同构的模块化解决方案出现，他能让我们只需在一个地方定义模块内容，
-并同时兼容AMD和CommonJS语法
+并同时兼容AMD和CommonJS语法。
+
+
+(function (self, factory) {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        // 当前环境是CommonJS规范环境
+        module.exports = factory();
+    }
+    else if (typeof define === 'function' && define.amd) {
+        // 当前环境是AMD规范环境
+        define(factory)
+    }
+    else {
+        self.umdModule = factory();
+    }
+}(this, function () {
+    // 真正要定义的模块代码
+    return function () {
+        return Math.random();
+    }
+}))
 
 
 
@@ -582,3 +602,4 @@ CommonJS规范和AMD规范特点：
 2、相互之间不能共用模块。例如不能在Node.js运行AMD模块，不能直接在浏览器运行Commonjs模块
 
 
+ 

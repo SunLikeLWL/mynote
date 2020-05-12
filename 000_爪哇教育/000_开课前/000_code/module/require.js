@@ -15,9 +15,10 @@ function customRequire(pathToModule) {
 
     const resultContent = funcWrapper[0] + content + funcWrapper[1];
 
-
+    // 解析代码
     const script = new vm.Script(resultContent);
 
+    // 生成可执行函数
     const func = script.runInThisContext();
 
     const m = { exports: {} }

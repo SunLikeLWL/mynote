@@ -230,9 +230,3 @@ renderToString()和renderToStaticMarkup()作用是将Virtual DOM渲染成HTML字
 
  
 # 第八章 自动化测试
-
-
-
-
-
-

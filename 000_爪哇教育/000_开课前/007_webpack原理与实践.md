@@ -181,7 +181,4 @@ const boiler = fs.readFileSync(path.resolve(__dirname,'index.bundle.boilerplate.
 const target = fs.readFileSync(path.resolve(__dirname,'index.js'),'utf-8');
 const content = boiler.replace("/* template*/,target);
 fs.writeFileSync(path.resolve(__dirname,'dist/index.bundle.js'),content,'utf-8');
-
-
-
-<h1 style='font-size:40px;position:fixed;bottom:100px;right:100px;color:white; z-index:9999999'>全屏就好了</h1>
+ 
