@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <script>
+        function axios(config) {
+            // 结构参数
+            let { url, method = 'GET', params = {}, data = {} } = config;
+            method = method.upperCase();
+            // 处理query参数(拼接到url上) 
+            let queryString = '';
+            Object.keys(params).forEach(key => {
+                queryString += `key=${params[key]}$`
+            })
+            if (queryString) {
+                queryString = queryString.substring(0, queryString.length - 1);
+                url += ('?' + queryString);
+            }
+
+            // 返回一个promise
+            return new Promise((resolve, reject) => {
+                //  1、执行异步ajax请求
+                //   创建xhr对象
+                const request = new XMLHttpRequest();
+                //   打开链接(初始化请求，没有请求)
+                request.open(method, url, true);
+                // 发送请求
+                if (method == "GET" || method == "DELETE") {
+                    request.send()
+                }
+                else if (method == "POST" || method == "PUT") {
+                    request.setRequestHeader("Content-Type", "application/json;chartset=utf-8")
+                    request.send(JSON.stringify(data))
+                }
+
+                //  2、如果请求成功了，调用resolve()
+                request.onreadystatechange = function (res) {
+                    // 绑定在状态改变，直接结束
+                    if (request.readyState !== 4) {
+                        return
+                    }
+                    const { status, statusText, response } = request;
+                    if (status >= 200 && status <= 299) {
+                        resolve({
+                            data: JSON.parse(response),
+                            status: status,
+                            statusText: statusText
+                        });
+                    }
+                    else {
+                        reject(('request error status is ' + status));
+                    }
+                }
+                //  3、如果请求失败了，调用reject()
+            })
+        }
+        axios({
+            url: "http://127.0.1:8001/goods",
+            method: "get",
+            params: {
+                id: 1
+            },
+            data: {
+                account: "Tom",
+                pwd: "Tom"
+            }
+        })
+            .then((res) => {
+                console.log(res)
+            },
+                (err) => {
+                    console.log(err)
+                })
+    </script>
+</body>
+
+</html>

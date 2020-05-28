@@ -47,11 +47,7 @@ define(function(require){
 2、define定义模块，require加模块，
 
 
-
-## CMD
-
-
-
+ 
 
 
 
