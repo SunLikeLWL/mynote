@@ -51,7 +51,7 @@ Set-Cookie:""
 
 2、同一个请求路径可以进行多个操作
 
-3、请求方式会用到get/post/put/delate
+3、请求方式会用到get/post/put/delete
 
 
 2、非REST API  restless
