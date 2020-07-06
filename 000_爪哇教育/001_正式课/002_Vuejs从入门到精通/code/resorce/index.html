@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>vue源码解析</title>
+</head>
+
+<body>
+    <div id='app'>
+        <h1 class='p1'>{{text}}</h1>
+        <input type="text" v-model='text'>
+        <input type="button" v-on:click="handleClick" value='v-on:click'>
+        <input type="button" @click="handleClick" value='@click'>
+    </div>
+    <script src='./customVue.js'></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                text: "Hello World!"
+            },
+            methods: {
+                handleClick() {
+                    console.log("handleClick")
+                }
+            }
+
+        })
+        // console.log(vm)
+    </script>
+</body>
+
+</html>
