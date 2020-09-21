@@ -4,7 +4,7 @@
 组件是一个抽象的概念，它是对一棵 DOM 树的抽象
 
 
-创建 vnode - 渲染 vnode - 生成 DOM” 这几个步骤：
+创建 vnode - 渲染 vnode - 生成 DOM  这几个步骤：
 
 
 1、创建vnode
